@@ -15,32 +15,22 @@ for r, d, f in os.walk(path):
             files.append(os.path.join(r, file))
 
 
+sheets = ['Bound', 'HS_Concordance', 'Applied_MFN', 'Applied_NonMFN', 'NonMFN_Only_Partners']
+
+for sheet in sheets:
+	df = pd.DataFrame()
+
+	for f in files:
+	    print(f[2:])
+
+	    try:
+	    	d = pd.read_excel(f[2:], sheet_name=sheet, skiprows=[0,1,2,3])
+	    	df = df.append(d)
+	    except:
+	    	continue
+
+	filename=sheet+".csv"
+	df.to_csv(filename, index=False, header=False)
 
 
-df = pd.read_excel('File.xlsx', sheet_name='Bound', skiprows=[0,1,2,3])
-
-
-for f in files:
-    print(f[2:])
-
-    df2 = pd.read_excel(f[2:], sheet_name='Bound', skiprows=[0,1,2,3])
-
-    bigdata = df.append(df2)
-
-exit()
-
-
-df = pd.read_excel('File.xlsx', sheet_name='Bound', skiprows=[0,1,2,3])
-
-
-df2 = pd.read_excel('DataExport_18_8_2019__5_56_54.xls', sheet_name='Bound', skiprows=[0,1,2,3])
-
-
-print(df.head())
-print(df2.head())
-
-bigdata = df.append(df2)
-
-print(bigdata)
-
-bigdata.to_csv(r'a.csv')
+#bigdata.to_csv(r'a.csv')
